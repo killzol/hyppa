@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Приглашение на день рождения</title>
+
+    <link rel="icon" type="image/png" href="favicon.png">
+
+    <!-- НОВЫЙ ШРИФТ -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: #3b342f;
+            line-height: 1.6;
+            background: linear-gradient(-45deg, #fff6e9, #f5e7d3, #fff2df, #f0e2cf);
+            background-size: 400% 400%;
+            animation: gradient 18s ease infinite;
+            transition: background 1s;
+        }
+        
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: auto;
+            padding: 40px 20px;
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 120px 20px;
+            background: linear-gradient(rgba(255, 245, 230, .75), rgba(255, 245, 230, .75)), url("hero.jpg");
+            background-size: cover;
+            background-position: center;
+            border-radius: 16px;
+            margin-bottom: 40px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, .08);
+            animation: fadeHero 1.5s ease;
+        }
+        
+        @keyframes fadeHero {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .hero h1 {
+            font-size: 46px;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #6d4b2f, #a57a4b);
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+        
+        .main-photo {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            border-radius: 16px;
+            margin: 40px 0;
+            transition: transform .8s cubic-bezier(.2, .8, .2, 1);
+        }
+        
+        .main-photo:hover {
+            transform: scale(1.04);
+        }
+        
+        .section {
+            background: rgba(255, 255, 255, .7);
+            backdrop-filter: blur(12px);
+            padding: 35px;
+            margin-bottom: 30px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, .08);
+            opacity: 0;
+            transform: translateY(60px);
+            transition: opacity .9s cubic-bezier(.2, .8, .2, 1), transform .9s cubic-bezier(.2, .8, .2, 1), box-shadow .3s;
+        }
+        
+        .section.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .section.hide {
+            opacity: 0;
+            transform: translateY(60px);
+        }
+        
+        .section:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, .12);
+        }
+        
+        .section h2 {
+            margin-bottom: 20px;
+            font-weight: 500;
+            position: relative;
+        }
+        
+        .section h2::after {
+            content: "";
+            display: block;
+            width: 40px;
+            height: 2px;
+            background: #c8a06f;
+            margin-top: 8px;
+            transition: .4s;
+        }
+        
+        .section:hover h2::after {
+            width: 70px;
+        }
+        
+        .label {
+            font-size: 14px;
+            color: #7a6c5a;
+        }
+        
+        .value {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        
+        button {
+            padding: 12px 22px;
+            border: 1px solid #e1c9a7;
+            background: #fffaf4;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: transform .25s, box-shadow .25s, background .25s;
+        }
+        
+        button:hover {
+            transform: translateY(-3px);
+            background: #fff3e6;
+            box-shadow: 0 8px 18px rgba(0, 0, 0, .1);
+        }
+        
+        .timer {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .timer div {
+            background: #fff9f1;
+            padding: 18px;
+            border-radius: 12px;
+            min-width: 70px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, .05);
+            transition: transform .3s;
+        }
+        
+        .timer div:hover {
+            transform: scale(1.05);
+        }
+        
+        .slider {
+            overflow: hidden;
+            border-radius: 16px;
+        }
+        
+        .slides {
+            display: flex;
+        }
+        
+        .slides img {
+            width: 25%;
+            height: 300px;
+            object-fit: cover;
+            flex-shrink: 0;
+            transition: transform .6s;
+        }
+        
+        .slides img:hover {
+            transform: scale(1.05);
+        }
+        
+        .secret {
+            display: none;
+            margin-top: 10px;
+            font-size: 20px;
+        }
+        
+        .showGift {
+            display: block;
+        }
+        
+        @media(max-width:700px) {
+            .hero {
+                padding: 80px 20px;
+            }
+            .hero h1 {
+                font-size: 34px;
+            }
+            .main-photo {
+                height: 250px;
+            }
+            .timer {
+                gap: 10px;
+            }
+            .timer div {
+                min-width: 60px;
+                padding: 14px;
+            }
+            .slides img {
+                height: 220px;
+            }
+        }
+        
+        body {
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+        
+        img {
+            -webkit-user-drag: none;
+            user-drag: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="hero">
+            <h1>Приглашение</h1>
+            <p>Буду рад видеть тебя на моём празднике</p>
+        </div>
+
+        <img src="1.jpg" class="main-photo" draggable="false">
+
+        <div class="section">
+
+            <h2>Дата</h2>
+
+            <div class="label">Когда</div>
+            <div class="value">11.04.2026</div>
+
+            <div class="label">Время</div>
+            <div class="value">16:00</div>
+
+        </div>
+
+        <div class="section">
+
+            <h2>До праздника осталось</h2>
+
+            <div class="timer">
+
+                <div>
+                    <div id="days">0</div>
+                    дней
+                </div>
+
+                <div>
+                    <div id="hours">0</div>
+                    часов
+                </div>
+
+                <div>
+                    <div id="minutes">0</div>
+                    мин
+                </div>
+
+                <div>
+                    <div id="seconds">0</div>
+                    сек
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="section">
+
+            <h2>Место встречи</h2>
+
+            <div class="value">проспект Просвещения, 19</div>
+
+            <button onclick="window.open('https://yandex.ru/maps/-/CPu8iHIS')">
+Открыть карту
+</button>
+
+        </div>
+
+        <div class="section">
+
+            <h2>Место проведения</h2>
+
+            <div class="value">Findsport — Волейболл</div>
+            <button onclick="winow.open('https://yandex.ru/maps/-/CPuLZ80n')">Открыть карту
+                </button>
+        </div>
+
+        <div class="section">
+
+            <h2>Программа</h2>
+
+            <div class="value">16:00 — встреча</div>
+            <div class="value">16:30 — начало игры</div>
+            <div class="value">19:00 — конец игры</div>
+            <div class="value">20:00 — кушаем</div>
+            <div class="value">20:30 — разьезд</div>
+        </div>
+
+        <div class="section">
+
+            <h2>Фотографии</h2>
+
+            <div class="slider">
+
+                <div class="slides">
+
+                    <img src="p1.jpg" draggable="false">
+                    <img src="p2.jpg" draggable="false">
+                    <img src="p3.jpg" draggable="false">
+                    <img src="p4.jpg" draggable="false">
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="section">
+
+            <h2>Дресс-код</h2>
+
+            <div class="value">
+                Свободный стиль / спортивный
+            </div>
+
+        </div>
+
+        <div class="section">
+
+            <h2>Подарок</h2>
+
+            <button onclick="showGift()">
+Желательная сумма подарка
+</button>
+
+            <div class="secret" id="secret">
+                1500₽
+            </div>
+
+        </div>
+
+        <div class="section">
+
+            <h2>Номер карты</h2>
+
+            <div class="value" id="card">
+                2200 2479 6952 3423
+            </div>
+
+            <button onclick="copyCard()">
+Скопировать номер карты
+</button>
+
+        </div>
+
+        <div class="section">
+
+            <h2>Контакты</h2>
+
+            <div class="value">
+                Телефон: +7 952 239 93 93
+            </div>
+
+            <div class="value">
+                Telegram: @Katopl1
+            </div>
+
+            <div class="valie">
+                ФИО: Серов Андрей Алексеевич
+            </div>
+
+        </div>
+
+        <div class="section">
+
+            <h2>ВАЖНО</h2>
+
+            <div class="value">
+                Ничего не планировать на этот день.
+                <br> и в случае невозможности посещения мероприятия сообщить заранее
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        function showGift() {
+
+            const gift = document.getElementById("secret");
+
+            gift.classList.toggle("showGift");
+
+        }
+
+        function copyCard() {
+
+            const text = document.getElementById("card").innerText;
+
+            navigator.clipboard.writeText(text);
+
+            alert("Номер карты скопирован");
+
+        }
+
+        const birthday = new Date("Apr 11, 2026 16:00:00").getTime();
+
+        setInterval(function() {
+
+            const now = new Date().getTime();
+            const diff = birthday - now;
+
+            document.getElementById("days").innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+            document.getElementById("hours").innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            document.getElementById("minutes").innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            document.getElementById("seconds").innerText = Math.floor((diff % (1000 * 60)) / 1000);
+
+        }, 1000);
+
+        const sections = document.querySelectorAll(".section");
+
+        window.addEventListener("scroll", () => {
+
+            sections.forEach(sec => {
+
+                const rect = sec.getBoundingClientRect();
+
+                if (rect.top < window.innerHeight - 100 && rect.bottom > 100) {
+
+                    sec.classList.add("show");
+                    sec.classList.remove("hide");
+
+                } else {
+
+                    sec.classList.remove("show");
+                    sec.classList.add("hide");
+
+                }
+
+            });
+
+        });
+
+        document.addEventListener("copy", e => e.preventDefault());
+        document.addEventListener("cut", e => e.preventDefault());
+
+        document.addEventListener("keydown", function(e) {
+
+            if (
+                (e.ctrlKey && e.key === "c") ||
+                (e.ctrlKey && e.key === "u") ||
+                (e.ctrlKey && e.key === "s") ||
+                (e.ctrlKey && e.key === "a") ||
+                (e.ctrlKey && e.key === "p")
+            ) {
+                e.preventDefault();
+            }
+
+        });
+
+        document.addEventListener("contextmenu", function(e) {
+            e.preventDefault();
+        });
+    </script>
+
+</body>
+
+</html>
